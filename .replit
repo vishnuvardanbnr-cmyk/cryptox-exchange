@@ -1,0 +1,49 @@
+modules = ["nodejs-24", "postgresql-16"]
+
+[deployment]
+router = "application"
+deploymentTarget = "autoscale"
+
+[deployment.postBuild]
+args = ["pnpm", "store", "prune"]
+env = { "CI" = "true" }
+
+[workflows]
+
+[agent]
+stack = "PNPM_WORKSPACE"
+expertMode = true
+integrations = ["github:1.0.0"]
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 20000
+
+[[ports]]
+localPort = 8080
+externalPort = 8080
+
+[[ports]]
+localPort = 8081
+externalPort = 80
+
+[[ports]]
+localPort = 8082
+externalPort = 3001
+
+[[ports]]
+localPort = 24725
+externalPort = 3000
+
+[[ports]]
+localPort = 24726
+externalPort = 3002
+
+[nix]
+channel = "stable-25_05"
+
+[userenv]
+
+[userenv.shared]
+EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID = "213621111737-89lrnrn8uja806qe7ndt6igic1hhva0f.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "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"
