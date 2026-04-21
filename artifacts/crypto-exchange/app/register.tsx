@@ -172,7 +172,7 @@ export default function RegisterScreen() {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { register, isLoggedIn } = useAuth();
+  const { register, isLoggedIn, checkEmailExists } = useAuth();
   const primary = colors.primary;
 
   const [name, setName] = useState("");
@@ -183,9 +183,39 @@ export default function RegisterScreen() {
   const [regStep, setRegStep] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  // Live email-availability check
+  const [emailStatus, setEmailStatus] = useState<"idle" | "checking" | "available" | "taken" | "invalid">("idle");
+
   useEffect(() => {
     if (isLoggedIn) router.replace("/(tabs)");
   }, [isLoggedIn, router]);
+
+  useEffect(() => {
+    const trimmed = email.trim();
+    if (!trimmed) {
+      setEmailStatus("idle");
+      return;
+    }
+    if (!/^\S+@\S+\.\S+$/.test(trimmed)) {
+      setEmailStatus("invalid");
+      return;
+    }
+    setEmailStatus("checking");
+    let cancelled = false;
+    const t = setTimeout(async () => {
+      try {
+        const exists = await checkEmailExists(trimmed);
+        if (cancelled) return;
+        setEmailStatus(exists ? "taken" : "available");
+      } catch {
+        if (!cancelled) setEmailStatus("idle");
+      }
+    }, 400);
+    return () => {
+      cancelled = true;
+      clearTimeout(t);
+    };
+  }, [email, checkEmailExists]);
 
   const animateRegStep = (next: number) => {
     if (Platform.OS !== "web") {
@@ -207,6 +237,8 @@ export default function RegisterScreen() {
       if (name.trim().length < 2) return { ok: false, msg: "Please enter your full name." };
     } else if (i === 1) {
       if (!/^\S+@\S+\.\S+$/.test(email.trim())) return { ok: false, msg: "Please enter a valid email address." };
+      if (emailStatus === "checking") return { ok: false, msg: "Checking email availability…" };
+      if (emailStatus === "taken") return { ok: false, msg: "An account with this email already exists. Please sign in instead." };
     } else if (i === 2) {
       if (password.length < 6) return { ok: false, msg: "Password must be at least 6 characters." };
     } else if (i === 3) {
@@ -332,6 +364,45 @@ export default function RegisterScreen() {
                       ) : undefined
                     }
                   />
+                  {f.key === "email" && email.trim().length > 0 && (
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: 6, marginTop: 8, marginLeft: 4 }}>
+                      {emailStatus === "checking" && (
+                        <>
+                          <ActivityIndicator size="small" color={colors.mutedForeground} />
+                          <Text style={{ fontSize: 12, fontFamily: "Inter_500Medium", color: colors.mutedForeground }}>
+                            Checking availability…
+                          </Text>
+                        </>
+                      )}
+                      {emailStatus === "available" && (
+                        <>
+                          <Feather name="check-circle" size={14} color="#00C087" />
+                          <Text style={{ fontSize: 12, fontFamily: "Inter_600SemiBold", color: "#00C087" }}>
+                            Email is available
+                          </Text>
+                        </>
+                      )}
+                      {emailStatus === "taken" && (
+                        <>
+                          <Feather name="alert-circle" size={14} color="#F6465D" />
+                          <Text style={{ fontSize: 12, fontFamily: "Inter_600SemiBold", color: "#F6465D", flex: 1 }}>
+                            Already registered.{" "}
+                            <Text style={{ color: primary, textDecorationLine: "underline" }} onPress={() => router.replace("/auth")}>
+                              Sign in instead
+                            </Text>
+                          </Text>
+                        </>
+                      )}
+                      {emailStatus === "invalid" && (
+                        <>
+                          <Feather name="alert-circle" size={14} color="#F0B90B" />
+                          <Text style={{ fontSize: 12, fontFamily: "Inter_500Medium", color: "#F0B90B" }}>
+                            Enter a valid email address
+                          </Text>
+                        </>
+                      )}
+                    </View>
+                  )}
                   {i === 2 && password.length > 0 && <PasswordStrength value={password} />}
                   <TouchableOpacity
                     style={[
