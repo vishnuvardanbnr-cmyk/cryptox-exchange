@@ -6,10 +6,8 @@ import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
-  KeyboardAvoidingView,
   LayoutAnimation,
   Platform,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -18,6 +16,7 @@ import {
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { KeyboardAwareScrollViewCompat } from "@/components/KeyboardAwareScrollViewCompat";
 import { useTheme } from "@/context/ThemeContext";
 import { useAuth } from "@/context/AuthContext";
 
@@ -243,8 +242,15 @@ export default function RegisterScreen() {
   const topPad = Math.max(insets.top, 12);
 
   return (
-    <KeyboardAvoidingView style={[styles.screen, { backgroundColor: colors.background }]} behavior={Platform.OS === "ios" ? "padding" : undefined}>
-      <ScrollView contentContainerStyle={{ paddingBottom: 60 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+      <KeyboardAwareScrollViewCompat
+        contentContainerStyle={{ paddingBottom: 120 }}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        bottomOffset={20}
+        extraKeyboardSpace={20}
+        style={{ flex: 1 }}
+      >
         <LinearGradient
           colors={[primary + "22", colors.background]}
           start={{ x: 0, y: 0 }}
@@ -384,8 +390,8 @@ export default function RegisterScreen() {
             </Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </KeyboardAwareScrollViewCompat>
+    </View>
   );
 }
 

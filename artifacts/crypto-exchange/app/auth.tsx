@@ -19,6 +19,7 @@ import {
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { KeyboardAwareScrollViewCompat } from "@/components/KeyboardAwareScrollViewCompat";
 import { useTheme } from "@/context/ThemeContext";
 import { useAuth, AuthMethod, TwoFactorRequiredError, LoginData } from "@/context/AuthContext";
 
@@ -626,11 +627,14 @@ export default function AuthScreen() {
   const tabX = slideAnim.interpolate({ inputRange: [0, 1], outputRange: ["0%", "50%"] });
 
   return (
-    <KeyboardAvoidingView style={[styles.screen, { backgroundColor: colors.background }]} behavior={Platform.OS === "ios" ? "padding" : undefined}>
-      <ScrollView
-        contentContainerStyle={{ paddingBottom: botPad }}
+    <View style={[styles.screen, { backgroundColor: colors.background }]}>
+      <KeyboardAwareScrollViewCompat
+        contentContainerStyle={{ paddingBottom: botPad + 60 }}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
+        bottomOffset={20}
+        extraKeyboardSpace={20}
+        style={{ flex: 1 }}
       >
         {/* Branded gradient hero */}
         <LinearGradient
@@ -796,8 +800,8 @@ export default function AuthScreen() {
           <Text style={{ color: primary, fontFamily: "Inter_600SemiBold" }} onPress={() => router.push("/terms")}>Privacy Policy</Text>.
         </Text>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </KeyboardAwareScrollViewCompat>
+    </View>
   );
 }
 
