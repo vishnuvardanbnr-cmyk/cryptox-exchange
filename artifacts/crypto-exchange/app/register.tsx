@@ -295,7 +295,7 @@ export default function RegisterScreen() {
 
           <View style={styles.brandRow}>
             <View style={[styles.brandLogo, { backgroundColor: primary }]}>
-              <Text style={styles.brandLogoText}>CX</Text>
+              <Text style={styles.brandLogoText}>UX</Text>
             </View>
             <View style={{ flex: 1 }}>
               <Text style={[styles.brandName, { color: colors.foreground }]}>Create your account</Text>

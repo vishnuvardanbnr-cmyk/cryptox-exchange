@@ -207,7 +207,7 @@ function StatusView({ kycState, colors, onStartL1, onStartL2 }: { kycState: KycS
           {vl >= 2 ? "Fully Verified" : vl === 1 ? "Basic Verified" : "Not Verified"}
         </Text>
         <Text style={{ fontSize: 12, fontFamily: "Inter_400Regular", color: colors.mutedForeground, textAlign: "center" }}>
-          {vl >= 2 ? "You have full access to all CryptoX features and limits."
+          {vl >= 2 ? "You have full access to all Universe X features and limits."
            : vl === 1 ? "Complete Advanced Verification to unlock higher limits."
            : "Complete verification to unlock trading features."}
         </Text>

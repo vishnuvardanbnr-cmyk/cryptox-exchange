@@ -142,7 +142,7 @@ function ChatScreen({ ticket, userId, userName, onBack }: { ticket: Ticket; user
             <View style={[styles.supportAvatar, { backgroundColor: colors.primary + "20" }]}>
               <Feather name="headphones" size={12} color={colors.primary} />
             </View>
-            <Text style={[styles.senderName, { color: colors.mutedForeground }]}>CryptoX Support</Text>
+            <Text style={[styles.senderName, { color: colors.mutedForeground }]}>Universe X Support</Text>
           </View>
         )}
         <View style={{ alignSelf: isUser ? "flex-end" : "flex-start", maxWidth: "78%" }}>

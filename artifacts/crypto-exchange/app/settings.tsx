@@ -127,7 +127,7 @@ function TwoFASetupModal({ visible, email, onConfirm, onCancel }: {
 
   const formattedSecret = rawSecret ? formatSecretGroups(rawSecret) : "";
   const otpUri = rawSecret
-    ? buildOtpAuthUri({ issuer: "CryptoX", account: email || "user", secretBase32: rawSecret })
+    ? buildOtpAuthUri({ issuer: "Universe X", account: email || "user", secretBase32: rawSecret })
     : "";
 
   const handleCopyKey = async () => {
@@ -238,7 +238,7 @@ function TwoFASetupModal({ visible, email, onConfirm, onCancel }: {
                 </View>
                 <Text style={[twoFAStyles.heading, { color: colors.foreground }]}>Enter Verification Code</Text>
                 <Text style={[twoFAStyles.sub, { color: colors.mutedForeground }]}>
-                  Open your authenticator app and enter the 6-digit code for CryptoX.
+                  Open your authenticator app and enter the 6-digit code for Universe X.
                 </Text>
               </View>
 

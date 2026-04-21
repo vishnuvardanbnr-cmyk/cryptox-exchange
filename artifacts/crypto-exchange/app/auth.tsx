@@ -283,7 +283,7 @@ export default function AuthScreen() {
         // No account linked → prompt to create one.
         Alert.alert(
           "No Account Found",
-          `There is no CryptoX account linked to ${profile.email || "this Google account"}. Would you like to create one now?`,
+          `There is no Universe X account linked to ${profile.email || "this Google account"}. Would you like to create one now?`,
           [
             { text: "Cancel", style: "cancel" },
             { text: "Create Account", onPress: () => { setIsLogin(false); void doRegister(); } },
@@ -314,7 +314,7 @@ export default function AuthScreen() {
             // Account already exists — don't silently log them in from the register tab.
             Alert.alert(
               "Account Already Exists",
-              `A CryptoX account is already linked to ${profile.email || "this Google account"}. Sign in instead?`,
+              `A Universe X account is already linked to ${profile.email || "this Google account"}. Sign in instead?`,
               [
                 { text: "Cancel", style: "cancel" },
                 { text: "Sign In", onPress: () => { setIsLogin(true); void doLogin(); } },
@@ -329,7 +329,7 @@ export default function AuthScreen() {
           if (accountMissing) {
             Alert.alert(
               "No Account Found",
-              `There is no CryptoX account linked to ${profile.email || "this Google account"}. Would you like to create one now?`,
+              `There is no Universe X account linked to ${profile.email || "this Google account"}. Would you like to create one now?`,
               [
                 { text: "Cancel", style: "cancel" },
                 { text: "Create Account", onPress: () => { setIsLogin(false); void doRegister(); } },
@@ -499,7 +499,7 @@ export default function AuthScreen() {
           </View>
           <Text style={[styles.stepTitle, { color: colors.foreground }]}>Two-Factor Authentication</Text>
           <Text style={[styles.stepSub, { color: colors.mutedForeground }]}>
-            Open your authenticator app and enter the 6-digit code for CryptoX, or use a backup code.
+            Open your authenticator app and enter the 6-digit code for Universe X, or use a backup code.
           </Text>
           <View style={[styles.otpContainer, { backgroundColor: colors.secondary, borderColor: twoFactorError ? "#F6465D" : colors.border, marginTop: 24 }]}>
             <TextInput
@@ -645,10 +645,10 @@ export default function AuthScreen() {
         >
           <View style={styles.brandRow}>
             <View style={[styles.brandLogo, { backgroundColor: primary }]}>
-              <Text style={styles.brandLogoText}>CX</Text>
+              <Text style={styles.brandLogoText}>UX</Text>
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={[styles.brandName, { color: colors.foreground }]}>CryptoX</Text>
+              <Text style={[styles.brandName, { color: colors.foreground }]}>Universe X</Text>
               <Text style={[styles.brandTagline, { color: colors.mutedForeground }]}>Professional Exchange</Text>
             </View>
             <View style={[styles.verifiedBadge, { borderColor: primary + "55", backgroundColor: primary + "1A" }]}>

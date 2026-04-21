@@ -241,7 +241,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const newUser: User = {
       id: generateId(),
-      displayName: data.displayName || (data.email ? data.email.split("@")[0] : "CryptoX User"),
+      displayName: data.displayName || (data.email ? data.email.split("@")[0] : "Universe X User"),
       email: data.email ?? "",
       phone: data.phone,
       primaryMethod: method,
@@ -467,7 +467,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       u.linkedAccounts?.some((a: any) => a.method === "google" && a.identifier === googleToken)
     ) as any;
     if (googleOwner && googleOwner.id !== entry.id) {
-      throw new Error("This Google account is already linked to a different CryptoX account.");
+      throw new Error("This Google account is already linked to a different Universe X account.");
     }
     const alreadyLinked = entry.linkedAccounts?.some((a: any) => a.method === "google" && a.identifier === googleToken);
     const nextLinked = alreadyLinked

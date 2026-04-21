@@ -52,7 +52,7 @@ export default function AppSplash() {
       </Animated.View>
 
       <Animated.View style={{ alignItems: "center", marginTop: 28, opacity: fade }}>
-        <Text style={styles.brand}>CryptoX</Text>
+        <Text style={styles.brand}>Universe X</Text>
         <Text style={styles.tagline}>Trade. Earn. Hold.</Text>
       </Animated.View>
 
